@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  demo-server-php:
+    build:
+      context: server
+      dockerfile: php.dockerfile
+    container_name: udp-server-demo
+    ports:
+      - "9999:9999/udp"
+    volumes:
+      - ./server:/app:rw
+    networks:
+      - php-udp-demo
+
+  demo-client-php:
+    build:
+      context: client
+      dockerfile: php.dockerfile
+    container_name: udp-client-demo
+    expose:
+      - "9999/udp"
+    volumes:
+      - ./client:/app:rw
+    networks:
+      - php-udp-demo
+
+networks:
+  php-udp-demo:
